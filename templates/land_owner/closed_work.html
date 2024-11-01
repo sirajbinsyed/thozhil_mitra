@@ -1,0 +1,59 @@
+{% extends "land_owner/base.html" %}
+
+{% block content %}
+
+<div class="container">
+    <div class="page-inner">
+        <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+            <div>
+                <h3 class="fw-bold mb-3">Closed Land Works</h3>
+            </div>
+        </div>
+
+        <div class="row">
+            
+
+            <div class="col-md-12">
+                <div class="card card-round">
+                    <div class="card-header">
+                        <div class="card-head-row card-tools-still-right">
+                            <div class="card-title">Data Table</div>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table align-items-center mb-0">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col">Plot Name</th>
+                                        
+                                        <th scope="col">Work Type</th>
+                                        <th scope="col">Details</th>
+                                        <th scope="col">Mate</th>
+                                       
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for land_work in land_works %}
+                                    <tr>
+                                        <th scope="row">{{ land_work.plot_details }}</th>
+                                      
+                                        <td>{{ land_work.work_type_name }}</td>
+                                        <td>{{ land_work.land_work_details }}</td>
+                                        <td>{{ land_work.mate_name }}</td>
+                                        
+                                        
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

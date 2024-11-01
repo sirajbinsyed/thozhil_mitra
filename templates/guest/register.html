@@ -1,0 +1,93 @@
+{% extends "guest/base.html" %}
+
+{% block content %}
+<section id="people" class="clearfix" style="background-image: url(/static/guest/img/reg.jpg);background-size: cover; height: 100vh; display: flex; justify-content: center; align-items: center;">
+    <div class="people_main_1" style="background-color: rgba(255, 255, 255, 0.9); width: 600px; padding: 40px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);">
+        <h2 style="color: #333; font-weight: bold; text-align: center; margin-bottom: 30px;font-size: large;">Land Owner Registration</h2>
+
+        <form action="{{ url_for('register') }}" method="POST">
+            <div class="row">
+            <div class="col-md-6 form-group">
+                <input type="text" name="name" class="form-control" placeholder="Name" required>
+            </div>
+
+            <div class="col-md-6 form-group">
+                <select name="panchayat_id" id="panchayat_id" class="form-control" required>
+                    <option value="">Select Panchayat</option>
+                    {% for panchayat in panchayats %}
+                        <option value="{{ panchayat.id }}">{{ panchayat.panchayat_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-md-6 form-group">
+                <select name="ward_id" id="ward_id" class="form-control" required>
+                    <option value="">Select Ward</option>
+                    <!-- Wards will be dynamically populated based on Panchayat selection -->
+                </select>
+            </div>
+
+            <div class="col-md-6 form-group">
+                <input type="tel" pattern="[0-9]{10}"  title="Please enter a valid 10-digit phone number"  name="phone" class="form-control" placeholder="Phone" required>
+            </div>
+
+            <div class="form-group">
+                <textarea name="address" placeholder="Address" class="form-control" rows="3" required></textarea>
+            </div>
+
+            <div class="col-md-6 form-group">
+                <input type="text" name="username" class="form-control" placeholder="Username" required>
+            </div>
+
+            <div class="col-md-6 form-group">
+                <input type="password" name="password" class="form-control" placeholder="Password" required>
+            </div>
+
+            <div class="form-group text-center">
+                <button type="submit" class="btn btn-primary" style="width: 40%; padding: 10px; font-size: 16px;">Submit</button>
+                &nbsp;
+                <button type="cancel" onclick="javascript:window.location.reload()" class="btn btn-danger" style="width: 40%; padding: 10px; font-size: 16px;">Cancel</button>
+            </div>
+        </div>
+        </form>
+
+        <br>
+        <p style="text-align: center;font-size: medium;">Already Have an Account ? <a href="/login">Login</a> </p>
+
+        <p style="text-align: center;font-size: small;">Go Back ? <a href="/index">Home</a></p>
+    </div>
+</section>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Trigger an AJAX request when the panchayat is selected
+        $('#panchayat_id').on('change', function() {
+            var panchayat_id = $(this).val();
+            
+            if (panchayat_id) {
+                $.ajax({
+                    url: '/get-wards/' + panchayat_id,
+                    method: 'GET',
+                    success: function(data) {
+                        $('#ward_id').empty();  // Clear the ward dropdown
+                        $('#ward_id').append('<option value="">Select Ward</option>'); // Add default option
+
+                        // Populate wards dynamically
+                        $.each(data, function(key, ward) {
+                            $('#ward_id').append('<option value="' + ward.id + '">' + ward.ward_name + '</option>');
+                        });
+                    },
+                    error: function(err) {
+                        console.log("Error loading wards: ", err);
+                    }
+                });
+            } else {
+                // If no panchayat is selected, reset the wards dropdown
+                $('#ward_id').empty();
+                $('#ward_id').append('<option value="">Select Ward</option>');
+            }
+        });
+    });
+</script>
+{% endblock %}

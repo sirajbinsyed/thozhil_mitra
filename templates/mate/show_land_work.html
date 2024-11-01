@@ -1,0 +1,63 @@
+{% extends "mate/base.html" %}
+
+{% block content %}
+<div class="container">
+  <div class="page-inner">
+    <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+      <div>
+        <h3 class="fw-bold mb-3">Land Works</h3>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card card-round">
+          <div class="card-header">
+            <div class="card-head-row card-tools-still-right">
+              <div class="card-title">Land Work Data Table</div>
+            </div>
+          </div>
+          <div class="card-body p-0">
+            <div class="table-responsive">
+              <table class="table align-items-center mb-0">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">Land Work ID</th>
+                    <th scope="col">Land Work Details</th>
+                    <th scope="col">Plot Details</th>
+                    <th scope="col" class="text-end">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for land_work in land_works %}
+                  <tr>
+                    <td>{{ land_work.id }}</td>
+                    <td>{{ land_work.land_work_details }}</td>
+                    <td>{{ land_work.plot_details }}</td>
+                    <td class="text-end">
+                      <form method="GET" action="{{ url_for('mate_assignment_land_work', mw_id=land_work.mw_id) }}" style="display:inline;">
+                        <button type="submit" class="btn btn-success">Assignment</button>
+                      </form>
+                      <form method="POST" action="{{ url_for('mate_land_work_attendance', mw_id=land_work.mw_id) }}" style="display:inline;">
+                        <button type="submit" class="btn btn-info">Add Attendance</button>
+                      </form>
+                      <form method="GET" action="{{ url_for('land_work_attendance', mw_id=land_work.mw_id) }}" style="display:inline;">
+                        <button type="submit" class="btn btn-warning">View Attendance</button>
+                      </form>
+
+                      <form method="GET" action="{{ url_for('work_land_close', mw_id=land_work.mw_id) }}" style="display:inline;">
+                        <button type="submit" class="btn btn-danger">Close</button>
+                      </form>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

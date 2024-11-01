@@ -1,0 +1,57 @@
+<!-- templates/mate/mate_assignment_land_work.html -->
+{% extends "mate/base.html" %}
+
+{% block content %}
+<div class="container">
+  <div class="page-inner">
+    <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+      <div>
+        <h3 class="fw-bold mb-3">WORK ASSIGNMENTS: {{ work.work_category_name }}</h3>
+      </div>
+    </div>
+
+    <!-- Work Details Section -->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card card-round">
+          <div class="card-header">
+            <div class="card-title">Work Details</div>
+          </div>
+          <div class="card-body">
+            <p><strong>Details:</strong> {{ work.land_work_details }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Workers Assignment Form -->
+    <div class="row mt-4">
+      <div class="col-md-12">
+        <form method="POST" action="{{ url_for('mate_assignment_land_work', mw_id=work.mw_id) }}">
+          <div class="card card-round">
+            <div class="card-header">
+              <div class="card-title">Assign Workers</div>
+            </div>
+            
+            <div class="row card-body">
+              <!-- List workers with checkboxes -->
+              {% for worker in workers %}
+              <div class="col-md-4 form-check">
+                <input class="form-check-input" type="checkbox" id="worker{{ worker.id }}" name="workers" value="{{ worker.id }}"
+                  {% if worker.id in assigned_workers_ids %} checked {% endif %}>
+                <label class="form-check-label" for="worker{{ worker.id }}">
+                  {{ worker.name }} - {{ worker.workers_details }}
+                </label>
+              </div>
+              {% endfor %}
+            </div>
+            <div class="card-action">
+              <button type="submit" class="btn btn-success">Submit Assignments</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

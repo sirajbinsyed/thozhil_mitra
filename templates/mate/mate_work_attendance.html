@@ -1,0 +1,45 @@
+{% extends "mate/base.html" %}
+
+{% block content %}
+<div class="container">
+  <div class="page-inner">
+    <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+      <div>
+        <h3 class="fw-bold mb-3">Attendance for Work: {{ work.work_details }}</h3>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card card-round">
+          <form method="POST" action="{{ url_for('mate_work_attendance', mw_id=work.id) }}">
+            <div class="form-group">
+              <label for="attendance_date">Select Date:</label>
+              <input type="date" class="form-control" id="attendance_date" name="attendance_date" required>
+            </div>
+
+            <div class="form-group">
+              <label for="workers">Select Workers for Attendance:</label>
+              <div class="row checkbox-group">
+                {% for worker in workers %}
+                <div class="col-md-4 form-check">
+                  <input class="form-check-input" type="checkbox" name="workers" value="{{ worker.id }}" id="worker{{ worker.id }}">
+                  <label class="form-check-label" for="worker{{ worker.id }}">
+                    {{ worker.name }} - {{ worker.workers_details }}
+                  </label>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+
+            <div class="card-action">
+              <button class="btn btn-success" type="submit">Submit Attendance</button>
+              <a href="{{ url_for('mate_work_attendance', mw_id=work.id) }}" class="btn btn-danger">Cancel</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

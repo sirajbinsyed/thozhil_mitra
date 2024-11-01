@@ -1,0 +1,128 @@
+{% extends "./land_owner/base.html" %}
+
+{% block content %}
+
+<div class="container">
+  <div class="page-inner">
+
+    <!-- Count Cards Row -->
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <h5>Total Plots</h5>
+            <h3>{{ total_plots }}</h3>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <h5>Total Mates</h5>
+            <h3>{{ total_mates }}</h3>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <h5>Total Land Works</h5>
+            <h3>{{ total_land_works }}</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Graphs Section -->
+    <div class="row mt-4">
+      <div class="col-md-6">
+        <canvas id="landWorksByMonth"></canvas>
+      </div>
+      <div class="col-md-6">
+        <canvas id="workDistribution"></canvas>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Chart.js for Graphs -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+ const landWorksData = {
+  labels: {{ land_works_by_month | map(attribute='month') | list | tojson }},
+  datasets: [{
+    label: 'Land Works by Month',
+    data: {{ land_works_by_month | map(attribute='count') | list | tojson }},
+    backgroundColor: [
+      'rgba(54, 162, 235, 0.5)', 
+      'rgba(255, 206, 86, 0.5)', 
+      'rgba(75, 192, 192, 0.5)', 
+      'rgba(255, 99, 132, 0.5)', 
+      'rgba(153, 102, 255, 0.5)'
+    ],
+    borderColor: [
+      'rgba(54, 162, 235, 1)', 
+      'rgba(255, 206, 86, 1)', 
+      'rgba(75, 192, 192, 1)', 
+      'rgba(255, 99, 132, 1)', 
+      'rgba(153, 102, 255, 1)'
+    ],
+    borderWidth: 1
+  }]
+};
+
+const workDistributionData = {
+  labels: {{ work_distribution | map(attribute='work_type_id') | list | tojson }},
+  datasets: [{
+    label: 'Work Distribution',
+    data: {{ work_distribution | map(attribute='count') | list | tojson }},
+    backgroundColor: [
+      'rgba(255, 99, 132, 0.5)', 
+      'rgba(255, 206, 86, 0.5)', 
+      'rgba(75, 192, 192, 0.5)', 
+      'rgba(153, 102, 255, 0.5)', 
+      'rgba(54, 162, 235, 0.5)'
+    ],
+    borderColor: [
+      'rgba(255, 99, 132, 1)', 
+      'rgba(255, 206, 86, 1)', 
+      'rgba(75, 192, 192, 1)', 
+      'rgba(153, 102, 255, 1)', 
+      'rgba(54, 162, 235, 1)'
+    ],
+    borderWidth: 1
+  }]
+};
+
+// Initialize charts
+const ctx1 = document.getElementById('landWorksByMonth').getContext('2d');
+const chart1 = new Chart(ctx1, {
+  type: 'bar',
+  data: landWorksData,
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  }
+});
+
+const ctx2 = document.getElementById('workDistribution').getContext('2d');
+const chart2 = new Chart(ctx2, {
+  type: 'pie',
+  data: workDistributionData,
+  options: {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top',
+      },
+    }
+  }
+});
+
+</script>
+
+{% endblock %}

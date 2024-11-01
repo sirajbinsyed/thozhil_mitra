@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Thozhil Mitra - Admin Dashboard</title>
+    <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
+    <link rel="icon" href="../../static/dashboard/img/kaiadmin/favicon.ico" type="image/x-icon" />
+
+    <!-- Fonts and icons -->
+    <script src="../../static/dashboard/js/plugin/webfont/webfont.min.js"></script>
+    <script>
+        WebFont.load({
+            google: { families: ["Public Sans:300,400,500,600,700"] },
+            custom: {
+                families: [
+                    "Font Awesome 5 Solid",
+                    "Font Awesome 5 Regular",
+                    "Font Awesome 5 Brands",
+                    "simple-line-icons",
+                ],
+                urls: ["../../static/dashboard/css/fonts.min.css"],
+            },
+            active: function () {
+                sessionStorage.fonts = true;
+            },
+        });
+    </script>
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="../../static/dashboard/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../../static/dashboard/css/plugins.min.css" />
+    <link rel="stylesheet" href="../../static/dashboard/css/kaiadmin.min.css" />
+
+   
+</head>
+
+<body>
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <div class="sidebar" data-background-color="dark">
+            <div class="sidebar-logo">
+                <!-- Logo Header -->
+                <div class="logo-header" data-background-color="dark">
+                    <a href="/admin-home" class="logo" style="color: white">
+                        THOZHIL MITRA
+                    </a>
+                    <div class="nav-toggle">
+                        <button class="btn btn-toggle toggle-sidebar">
+                            <i class="gg-menu-right"></i>
+                        </button>
+                        <button class="btn btn-toggle sidenav-toggler">
+                            <i class="gg-menu-left"></i>
+                        </button>
+                    </div>
+                    <button class="topbar-toggler more">
+                        <i class="gg-more-vertical-alt"></i>
+                    </button>
+                </div>
+                <!-- End Logo Header -->
+            </div>
+            <div class="sidebar-wrapper scrollbar scrollbar-inner">
+                <div class="sidebar-content">
+                    <ul class="nav nav-secondary">
+                        <li class="nav-item ">
+                            <a href="/landowner-home" class="collapsed" aria-expanded="false">
+                               
+                                <p>Dashboard</p>
+
+                            </a>
+
+                        </li>
+
+                        <li class="nav-item ">
+                            <a href="/landowner-plot" class="collapsed" aria-expanded="false">
+                               
+                                <p>Plot</p>
+
+                            </a>
+
+                        </li>
+
+                        <li class="nav-item ">
+                            <a href="/landowner-work" class="collapsed" aria-expanded="false">
+                               
+                                <p>Work</p>
+
+                            </a>
+
+                        </li>
+
+                        <li class="nav-item ">
+                            <a href="/landowner-ongoing-work" class="collapsed" aria-expanded="false">
+                               
+                                <p>Ongoing Work</p>
+
+                            </a>
+
+                        </li>
+
+                        <li class="nav-item ">
+                            <a href="/landowner-closed-work" class="collapsed" aria-expanded="false">
+                               
+                                <p>Closed Work</p>
+
+                            </a>
+
+                        </li>
+                       
+                       
+
+                        <li class="nav-item ">
+                            <a href="/logout " class="collapsed" aria-expanded="false">
+                               
+                                <p style="color: brown;">Logout</p>
+
+                            </a>
+                        </li>
+                        
+                        
+                       
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- End Sidebar -->
+
+        <div class="main-panel">
+            <div class="main-header">
+               
+                <!-- Navbar Header -->
+                
+                <!-- End Navbar -->
+            </div>
+            {% block content %}
+
+            {% endblock %}
+
+
+
+
+
+
+
+        </div>
+
+    </div>
+    <!--   Core JS Files   -->
+    <script src="../../static/dashboard/js/core/jquery-3.7.1.min.js"></script>
+    <script src="../../static/dashboard/js/core/popper.min.js"></script>
+    <script src="../../static/dashboard/js/core/bootstrap.min.js"></script>
+
+    <!-- jQuery Scrollbar -->
+    <script src="../../static/dashboard/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+
+    <!-- Chart JS -->
+    <script src="../../static/dashboard/js/plugin/chart.js/chart.min.js"></script>
+
+    <!-- jQuery Sparkline -->
+    <script src="../../static/dashboard/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
+
+    <!-- Chart Circle -->
+    <script src="../../static/dashboard/js/plugin/chart-circle/circles.min.js"></script>
+
+    <!-- Datatables -->
+    <script src="../../static/dashboard/js/plugin/datatables/datatables.min.js"></script>
+
+    <!-- Bootstrap Notify -->
+    <script src="../../static/dashboard/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+
+    <!-- jQuery Vector Maps -->
+    <script src="../../static/dashboard/js/plugin/jsvectormap/jsvectormap.min.js"></script>
+    <script src="../../static/dashboard/js/plugin/jsvectormap/world.js"></script>
+
+    <!-- Sweet Alert -->
+    <script src="../../static/dashboard/js/plugin/sweetalert/sweetalert.min.js"></script>
+
+    <!-- Kaiadmin JS -->
+    <script src="../../static/dashboard/js/kaiadmin.min.js"></script>
+
+  
+    <script>
+        $("#lineChart").sparkline([102, 109, 120, 99, 110, 105, 115], {
+            type: "line",
+            height: "70",
+            width: "100%",
+            lineWidth: "2",
+            lineColor: "#177dff",
+            fillColor: "rgba(23, 125, 255, 0.14)",
+        });
+
+        $("#lineChart2").sparkline([99, 125, 122, 105, 110, 124, 115], {
+            type: "line",
+            height: "70",
+            width: "100%",
+            lineWidth: "2",
+            lineColor: "#f3545d",
+            fillColor: "rgba(243, 84, 93, .14)",
+        });
+
+        $("#lineChart3").sparkline([105, 103, 123, 100, 95, 105, 115], {
+            type: "line",
+            height: "70",
+            width: "100%",
+            lineWidth: "2",
+            lineColor: "#ffa534",
+            fillColor: "rgba(255, 165, 52, .14)",
+        });
+    </script>
+</body>
+
+</html>

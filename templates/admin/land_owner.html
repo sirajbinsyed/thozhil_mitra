@@ -1,0 +1,67 @@
+{% extends "admin/base.html" %}
+
+{% block content %}
+<div class="container">
+  <div class="page-inner">
+    <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+      <div>
+        <h3 class="fw-bold mb-3">Mates</h3>
+      </div>
+    </div>
+
+    <div class="row">
+     
+      <div class="col-md-12">
+        <div class="card card-round">
+          <div class="card-header">
+            <div class="card-head-row card-tools-still-right">
+              <div class="card-title">Land Owner Data Table</div>
+            </div>
+          </div>
+          <div class="card-body p-0">
+            <div class="table-responsive">
+              <table class="table align-items-center mb-0">
+                <thead class="thead-light">
+                  <tr>
+                    
+                    <th scope="col">Name</th>
+                    <th scope="col">ward</th>
+                    <th scope="col">panchayath</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">Address</th>
+                    <th scope="col" class="text-end">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for landowner in landowners %}
+                  <tr>
+                    
+                    <td>{{ landowner.name }}</td>
+                    <td>{{ landowner.ward_id }}</td>
+                    <td>{{ landowner.panchayath_id }}</td>
+                    <td>{{ landowner.phone }}</td>
+                    <td>{{ landowner.address }}</td>
+                    <td class="text-end">
+                      {% if landowner.status == 1 %}
+                        <a href="{{ url_for('admin_landowner_plots', landowner_id=landowner.login_id) }}" class="btn btn-info">View Plots</a>
+                      {% elif landowner.status != 1 %}
+                        <a href="{{ url_for('admin_new_landowner', landowner_id=landowner.login_id, type='accept') }}" class="btn btn-success">Approve Landowner</a>
+                        <a href="{{ url_for('admin_new_landowner', landowner_id=landowner.login_id, type='reject') }}" class="btn btn-danger">Reject Landowner</a>
+                      {% endif %}
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    
+
+{% endblock %}

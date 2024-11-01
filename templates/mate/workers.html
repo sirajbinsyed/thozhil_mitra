@@ -1,0 +1,79 @@
+{% extends "mate/base.html" %}
+
+{% block content %}
+<div class="container">
+  <div class="page-inner">
+    <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+      <div>
+        <h3 class="fw-bold mb-3">Manage Workers</h3>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card card-round">
+          <form method="POST" action="{{ url_for('mate_workers') }}">
+            <div class="row">
+              <div class="col-md-6 col-lg-4">
+                <div class="form-group">
+                  <label for="name">Worker Name</label>
+                  <input type="text" class="form-control" id="name" name="name" placeholder="Enter Worker Name" value="{{ worker_to_edit.name if worker_to_edit else '' }}" required />
+                </div>
+
+                <div class="form-group">
+                  <label for="workers_details">Worker Details</label>
+                  <input type="text" class="form-control" id="workers_details" name="workers_details" placeholder="Enter Worker Details" value="{{ worker_to_edit.workers_details if worker_to_edit else '' }}" required />
+                </div>
+
+                <input type="hidden" name="worker_id" value="{{ worker_to_edit.id if worker_to_edit else '' }}" />
+
+                <div class="card-action">
+                  <button class="btn btn-success" type="submit">Submit</button>
+                  <button class="btn btn-danger" type="button" onclick="window.history.back();">Cancel</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="col-md-12">
+        <div class="card card-round">
+          <div class="card-header">
+            <div class="card-head-row card-tools-still-right">
+              <div class="card-title">Workers Data Table</div>
+            </div>
+          </div>
+          <div class="card-body p-0">
+            <div class="table-responsive">
+              <table class="table align-items-center mb-0">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">Worker Name</th>
+                    <th scope="col">Worker Details</th>
+                    <th scope="col" class="text-end">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for worker in workers %}
+                  <tr>
+                    <td>{{ worker.name }}</td>
+                    <td>{{ worker.workers_details }}</td>
+                    <td class="text-end">
+                      <a href="{{ url_for('mate_workers', edit=worker.id) }}" class="btn btn-info">Edit</a>
+                      <form method="POST" action="{{ url_for('delete_worker', worker_id=worker.id) }}" style="display:inline;">
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this worker?');">Delete</button>
+                      </form>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

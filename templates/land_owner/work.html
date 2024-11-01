@@ -1,0 +1,111 @@
+{% extends "land_owner/base.html" %}
+
+{% block content %}
+
+<div class="container">
+    <div class="page-inner">
+        <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+            <div>
+                <h3 class="fw-bold mb-3">Manage Land Works</h3>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-round">
+                    <form method="POST" action="{{ url_for('landowner_work') }}">
+                        <input type="hidden" name="land_work_id" value="{{ land_work_to_edit.id if land_work_to_edit else '' }}">
+
+                        <div class="form-group">
+                            <label for="plot_id">Plot</label>
+                            <select class="form-control" name="plot_id" required>
+                                <option value="">Select Plot</option>
+                                {% for plot in plots %}
+                                <option value="{{ plot.id }}" {% if land_work_to_edit and land_work_to_edit.plot_id == plot.id %}selected{% endif %}>{{ plot.plot_details }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                      
+
+                        <div class="form-group">
+                            <label for="work_type_id">Work Type</label>
+                            <select class="form-control" name="work_type_id" required>
+                                <option value="">Select Work Type</option>
+                                {% for work_type in work_types %}
+                                <option value="{{ work_type.id }}" {% if land_work_to_edit and land_work_to_edit.work_type_id == work_type.id %}selected{% endif %}>{{ work_type.work_type_name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="land_work_details">Land Work Details</label>
+                            <textarea class="form-control" name="land_work_details" placeholder="Enter Land Work Details" required>{{ land_work_to_edit.land_work_details if land_work_to_edit else '' }}</textarea>
+                        </div>
+
+                      
+
+                        <div class="card-action">
+                            <button class="btn btn-success" type="submit">Submit</button>
+                            <button class="btn btn-danger" type="reset">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="card card-round">
+                    <div class="card-header">
+                        <div class="card-head-row card-tools-still-right">
+                            <div class="card-title">Data Table</div>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table align-items-center mb-0">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col">Plot Name</th>
+                                        
+                                        <th scope="col">Work Type</th>
+                                        <th scope="col">Details</th>
+                                        <th scope="col">Status</th>
+                                        <th scope="col" class="text-end">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for land_work in land_works %}
+                                    <tr>
+                                        <th scope="row">{{ land_work.plot_details }}</th>
+                                      
+                                        <td>{{ land_work.work_type_name }}</td>
+                                        <td>{{ land_work.land_work_details }}</td>
+                                        <td>
+                                            {% if land_work.status == '0' %}
+                                              initiated
+                                            {% elif land_work.status == '1' %}
+                                              ongoing
+                                            {% elif land_work.status == '2' %}
+                                              closed
+                                            {% endif %}
+                                          </td>
+                                          
+                                        <td class="text-end">
+                                            <a href="{{ url_for('landowner_work', edit=land_work.id) }}" class="btn btn-info">Edit</a>
+                                            <form method="POST" action="{{ url_for('delete_land_work', land_work_id=land_work.id) }}" style="display:inline;">
+                                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this land work?');">Delete</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

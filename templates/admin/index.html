@@ -1,0 +1,136 @@
+{% extends "admin/base.html" %}
+
+{% block content %}
+<div class="container">
+  <div class="page-inner">
+    <!-- Count Cards -->
+    <div class="row">
+      <div class="col-md-3">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Total Workers</h5>
+            <p class="card-text display-4">{{ total_workers }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Total Attendance</h5>
+            <p class="card-text display-4">{{ total_attendance_records }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Total Mates</h5>
+            <p class="card-text display-4">{{ total_mates }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Total Works</h5>
+            <p class="card-text display-4">{{ total_works }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Total land Works</h5>
+            <p class="card-text display-4">{{ total_land_works }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Total land owners</h5>
+            <p class="card-text display-4">{{ total_land_owners }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Total open works</h5>
+            <p class="card-text display-4">{{ total_open_works }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Total closed works</h5>
+            <p class="card-text display-4">{{ total_closed_works }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Attendance by Month Graph -->
+    <div class="row mt-5">
+      <div class="col-md-6">
+        <h5>Attendance by Month</h5>
+        <canvas id="attendanceChart"></canvas>
+      </div>
+
+      <!-- Work Distribution by Type Graph -->
+      <div class="col-md-6" style="padding:0px 180px">
+        <h5>Work Distribution</h5>
+        <canvas id="workChart"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  // Attendance by Month Data
+const attendanceChartCtx = document.getElementById('attendanceChart').getContext('2d');
+const attendanceData = {
+  labels: [{% for row in attendance_by_month %}"{{ row['month'] }}", {% endfor %}],
+  datasets: [{
+    label: 'Attendance Count',
+    data: [{% for row in attendance_by_month %}{{ row['count'] }}, {% endfor %}],
+    backgroundColor: ['rgba(75, 192, 192, 0.2)', 'rgba(255, 159, 64, 0.2)', 'rgba(54, 162, 235, 0.2)'],
+    borderColor: ['rgba(75, 192, 192, 1)', 'rgba(255, 159, 64, 1)', 'rgba(54, 162, 235, 1)'],
+    borderWidth: 1
+  }]
+};
+const attendanceChart = new Chart(attendanceChartCtx, {
+  type: 'bar',
+  data: attendanceData,
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  }
+});
+
+// Work Distribution Data
+const workChartCtx = document.getElementById('workChart').getContext('2d');
+const workData = {
+  labels: [{% for row in work_distribution %}"{{ row['work_category_id'] }}", {% endfor %}],
+  datasets: [{
+    label: 'Work Count',
+    data: [{% for row in work_distribution %}{{ row['count'] }}, {% endfor %}],
+    backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(75, 192, 192, 0.2)'],
+    borderColor: ['rgba(255, 99, 132, 1)', 'rgba(153, 102, 255, 1)', 'rgba(75, 192, 192, 1)'],
+    borderWidth: 1
+  }]
+};
+const workChart = new Chart(workChartCtx, {
+  type: 'pie',
+  data: workData
+});
+
+</script>
+{% endblock %}

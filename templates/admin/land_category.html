@@ -1,0 +1,68 @@
+{% extends "admin/base.html" %}
+
+{% block content %}
+
+<div class="container">
+    <div class="page-inner">
+        <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+            <div>
+                <h3 class="fw-bold mb-3">Land Categories</h3>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-round">
+                    <form method="POST" action="{{ url_for('admin_land_category') }}">
+                        <input type="hidden" name="land_category_id" value="{{ land_category_to_edit.id if land_category_to_edit else '' }}">
+                        <div class="form-group">
+                            <label for="land_category">Land Category</label>
+                            <input type="text" class="form-control" name="land_category" placeholder="Enter Land Category Name" required value="{{ land_category_to_edit.land_category_name if land_category_to_edit else '' }}" />
+                        </div>
+                        <div class="card-action">
+                            <button class="btn btn-success" type="submit">Submit</button>
+                            <button class="btn btn-danger" type="reset">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="card card-round">
+                    <div class="card-header">
+                        <div class="card-head-row card-tools-still-right">
+                            <div class="card-title">Data Table</div>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table align-items-center mb-0">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col">Land Category Name</th>
+                                        <th scope="col" class="text-end">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for land_category in land_categories %}
+                                    <tr>
+                                        <th scope="row">{{ land_category.land_category_name }}</th>
+                                        <td class="text-end">
+                                            <a href="{{ url_for('admin_land_category', edit=land_category.id) }}" class="btn btn-info">Edit</a>
+                                            <form method="POST" action="{{ url_for('delete_land_category', land_category_id=land_category.id) }}" style="display:inline;">
+                                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this land category?');">Delete</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

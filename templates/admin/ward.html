@@ -1,0 +1,82 @@
+{% extends "admin/base.html" %}
+
+{% block content %}
+
+<div class="container">
+  <div class="page-inner">
+    <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+      <div>
+        <h3 class="fw-bold mb-3">Ward</h3>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card card-round">
+          <div class="row">
+            <div class="col-md-6 col-lg-4">
+              <form method="POST" action="{{ url_for('admin_ward') }}">
+                <input type="hidden" name="ward_id" value="{{ ward_to_edit.id if ward_to_edit else '' }}">
+                <div class="form-group">
+                  <label for="ward">Ward</label>
+                  <input type="text" class="form-control" name="ward" placeholder="Enter Ward Name" required value="{{ ward_to_edit.ward_name if ward_to_edit else '' }}" />
+                </div>
+                <div class="form-group">
+                  <label for="panchayat_id">Select Panchayat</label>
+                  <select class="form-control" name="panchayat_id" required>
+                    <option value="" disabled {% if not ward_to_edit %}selected{% endif %}>Select Panchayat</option>
+                    {% for panchayat in panchayats %}
+                    <option value="{{ panchayat.id }}" {% if ward_to_edit and ward_to_edit.panchayat_id == panchayat.id %}selected{% endif %}>{{ panchayat.panchayat_name }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+                <div class="card-action">
+                  <button type="submit" class="btn btn-success">Submit</button>
+                  <a href="{{ url_for('admin_ward') }}" class="btn btn-danger">Cancel</a>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="card card-round">
+          <div class="card-header">
+            <div class="card-head-row card-tools-still-right">
+              <div class="card-title">Data Table</div>
+            </div>
+          </div>
+          <div class="card-body p-0">
+            <div class="table-responsive">
+              <table class="table align-items-center mb-0">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">Ward Name</th>
+                    <th scope="col">Panchayat Name</th> <!-- Added Panchayat Name -->
+                    <th scope="col" class="text-end">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for ward in wards %}
+                  <tr>
+                    <th scope="row">{{ ward.ward_name }}</th>
+                    <td>{{ ward.panchayat_name }}</td> <!-- Display Panchayat Name -->
+                    <td class="text-end">
+                      <a href="{{ url_for('admin_ward', edit=ward.id) }}" class="btn btn-info btn-sm">Edit</a>
+                      <form action="{{ url_for('delete_ward', ward_id=ward.id) }}" method="POST" style="display:inline;">
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                      </form>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

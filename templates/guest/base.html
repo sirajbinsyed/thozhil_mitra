@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>agricultural</title>
+  <link href="../../static/guest/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../../static/guest/css/global.css" rel="stylesheet">
+  <link href="../../static/guest/css/index.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="../../static/guest/css/font-awesome.min.css" />
+  <link href="https://fonts.googleapis.com/css?family=Philosopher" rel="stylesheet">
+  <link href="../../static/guest/css/ken-burns.css" rel="stylesheet" type="text/css" media="all" />
+  <link type="text/css" rel="stylesheet" href="../../static/guest/css/animate.css">
+  <script src="../../static/guest/js/jquery-2.1.1.min.js"></script>
+  <script src="../../static/guest/js/bootstrap.min.js"></script>
+
+
+
+
+</head>
+
+<body>
+  <section id="header_main">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12 space_all">
+          <div class="col-sm-3 space_all">
+            <div class="header_main_1" style="display: flex; align-items: center;">
+              <a href="/index" style="display: flex; align-items: center;">
+                  <img src="/static/guest/img/logo.png" style="width: 65px;">
+                  <h6 style="margin: 0;">THOZHIL MITRA</h6>
+              </a>
+          </div>
+          
+          </div>
+          <div class="col-sm-9 space_all" style="text-align: end;padding-top: 14px;">
+            <a href="/index" style="background-color:white;color: black;padding:10px 20px"> Home </a>
+            <a href="/register" style="background-color:white;color: black;padding:10px 20px"> Register </a>
+            <a href="/login" style="background-color:white;color: black;padding:10px 20px"> Login </a>
+          </div class="col-sm-12 space_all">
+
+
+        </div>
+      </div>
+    </div>
+  </section>
+  {% block content %}
+
+  {% endblock %}
+
+  <section id="footer">
+    <div class="footer_inner clearfix">
+      <div class="container">
+        <div class="row">
+        </div>
+      </div>
+    </div>
+    </div>
+    </div>
+    </div>
+  </section>
+  <section id="footer_main" class="clearfix">
+    <div class="col-sm-12">
+      <div class="footer_main_1">
+        <p></p>
+      </div>
+    </div>
+  </section>
+  <script>
+    $(document).ready(function () {
+      /*****Fixed Menu******/
+      var secondaryNav = $('.cd-secondary-nav'),
+        secondaryNavTopPosition = secondaryNav.offset().top;
+      $(window).on('scroll', function () {
+        if ($(window).scrollTop() > secondaryNavTopPosition) {
+          secondaryNav.addClass('is-fixed');
+        } else {
+          secondaryNav.removeClass('is-fixed');
+        }
+      });
+    });
+  </script>
+</body>

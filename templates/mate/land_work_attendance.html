@@ -1,0 +1,61 @@
+<!-- templates/mate/land_work_attendance.html -->
+{% extends "mate/base.html" %}
+
+{% block content %}
+<div class="container">
+  <div class="page-inner">
+    <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+      <div>
+        <h3 class="fw-bold mb-3">ATTENDANCE RECORDS FOR: {{ work.work_category_name }}</h3>
+      </div>
+    </div>
+
+    <!-- Work Details Section -->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card card-round">
+          <div class="card-header">
+            <div class="card-title">Work Details</div>
+          </div>
+          <div class="card-body">
+            <p><strong>Details:</strong> {{ work.land_work_details }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Attendance Records Table -->
+    <div class="row mt-4">
+      <div class="col-md-12">
+        <div class="card card-round">
+          <div class="card-header">
+            <div class="card-title">Attendance Records</div>
+          </div>
+          <div class="card-body">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Worker ID</th>
+                  <th>Worker Name</th>
+                  <th>Details</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for record in attendance_records %}
+                <tr>
+                  <td>{{ record.id }}</td>
+                  <td>{{ record.name }}</td>
+                  <td>{{ record.workers_details }}</td>
+                  <td>{{ record.date }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

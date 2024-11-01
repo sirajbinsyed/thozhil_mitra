@@ -1,0 +1,55 @@
+{% extends "mate/base.html" %}
+
+{% block content %}
+<div class="container">
+  <div class="page-inner">
+    <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+      <div>
+        <h3 class="fw-bold mb-3">Attendance for Work: {{ work.work_details }}</h3>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card card-round">
+          <div class="card-header">
+            <div class="card-head-row card-tools-still-right">
+              <div class="card-title">Attendance Data</div>
+            </div>
+          </div>
+
+          <div class="card-body p-0">
+            <div class="table-responsive">
+              <table class="table align-items-center mb-0">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">Worker Name</th>
+                    <th scope="col">Worker Details</th>
+                    <th scope="col">Attendance Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% if attendance_records %}
+                    {% for record in attendance_records %}
+                    <tr>
+                      <td>{{ record.name }}</td>
+                      <td>{{ record.workers_details }}</td>
+                      <td>{{ record.date }}</td>
+                    </tr>
+                    {% endfor %}
+                  {% else %}
+                    <tr>
+                      <td colspan="3" class="text-center">No attendance records found.</td>
+                    </tr>
+                  {% endif %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

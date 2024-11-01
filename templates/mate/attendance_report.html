@@ -1,0 +1,94 @@
+{% extends "./mate/base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="page-inner">
+        <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+            <h3 class="fw-bold mb-3">Attendance Report</h3>
+        </div>
+
+        <form method="POST" class="mb-4">
+            <div class="input-group">
+                <select name="year" class="form-select">
+                    <option>select year</option>
+                    {% for year in range(2024, current_year + 4) %}
+                        <option value="{{ year }}" >{{ year }}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit" class="btn btn-primary">Get Report</button>
+            </div>
+        </form>
+
+        <div class="row">
+            <!-- Total Attendance Report -->
+            <div class="col-md-6">
+                <div class="card card-round">
+                    <div class="card-header">
+                        <div class="card-title">Total Attendance </div>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Total Attendance: {{ total_attendance }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Year-wise Attendance Report -->
+            <div class="col-md-6">
+                <div class="card card-round">
+                    <div class="card-header">
+                        <div class="card-title">Year-wise Attendance</div>
+                    </div>
+                    <div class="card-body">
+                        <table class="table align-items-center mb-0">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">Year</th>
+                                    <th scope="col">Total Attendance</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in yearwise_attendance %}
+                                <tr>
+                                    <td>{{ item.year }}</td>
+                                    <td>{{ item.total }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Individual Attendance Counts -->
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <div class="card card-round">
+                    <div class="card-header">
+                        <div class="card-title">Individual Worker Attendance </div>
+                    </div>
+                    <div class="card-body">
+                        <table class="table align-items-center mb-0">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">Worker</th>
+                                    <th scope="col">Attendance Count</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for worker in individual_attendance %}
+                                <tr>
+                                    <td>{{ worker.name }}</td>
+                                    <td>{{ worker.attendance_count }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

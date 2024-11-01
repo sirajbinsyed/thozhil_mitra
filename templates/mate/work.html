@@ -1,0 +1,53 @@
+{% extends "mate/base.html" %}
+
+{% block content %}
+<div class="container">
+  <div class="page-inner">
+    <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+      <div>
+        <h3 class="fw-bold mb-3">Work</h3>
+      </div>
+    </div>
+
+    <div class="row">
+     
+      <div class="col-md-12">
+        <div class="card card-round">
+          <div class="card-header">
+            <div class="card-head-row card-tools-still-right">
+              <div class="card-title">Work Data Table</div>
+            </div>
+          </div>
+          <div class="card-body p-0">
+            <div class="table-responsive">
+              <table class="table align-items-center mb-0">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">Work Category</th>
+                    <th scope="col">Work Details</th>
+                    <th scope="col" class="text-end">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for work in works %}
+                  <tr>
+                    <td>{{ work.work_category_name }}</td>
+                    <td>{{ work.work_details }}</td>
+                    <td class="text-end">
+                     
+                      <form method="POST" action="{{ url_for('mate_accept_work', work_id=work.id) }}" style="display:inline;">
+                        <button type="submit" class="btn btn-success">Accept</button>
+                      </form>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

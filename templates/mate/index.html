@@ -1,0 +1,76 @@
+{% extends "./mate/base.html" %}
+
+{% block content %}
+<div class="container">
+  <div class="page-inner">
+    <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+      <h3 class="fw-bold mb-3">Dashboard</h3>
+    </div>
+
+    <div class="row">
+      <!-- Count Cards -->
+      <div class="col-md-4">
+        <div class="card card-round">
+          <div class="card-body">
+            <h5 class="card-title">Total Works</h5>
+            <p class="card-text">{{ works_count }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card card-round">
+          <div class="card-body">
+            <h5 class="card-title">Total Attendances</h5>
+            <p class="card-text">{{ attendance_count }}</p>
+          </div>
+        </div>
+      </div>
+      <!-- Add more count cards as needed -->
+    </div>
+
+    <!-- Graphs -->
+    <div class="row mt-4">
+      <div class="col-md-12">
+        <div class="card card-round">
+          <div class="card-header">
+            <div class="card-title">Works Per Status</div>
+          </div>
+          <div class="card-body">
+            <canvas id="worksStatusChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add any other sections or graphs here -->
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const ctx = document.getElementById('worksStatusChart').getContext('2d');
+  const worksPerStatus = {
+    labels: [{% for status in works_per_status %}'{{ status.status }}'{% if not loop.last %}, {% endif %}{% endfor %}],
+    datasets: [{
+      label: 'Works Count',
+      data: [{% for status in works_per_status %}{{ status.count }}{% if not loop.last %}, {% endif %}{% endfor %}],
+      backgroundColor: 'rgba(54, 162, 235, 0.2)',
+      borderColor: 'rgba(54, 162, 235, 1)',
+      borderWidth: 1
+    }]
+  };
+
+  const worksStatusChart = new Chart(ctx, {
+    type: 'bar', // Change to 'pie', 'line', etc., as needed
+    data: worksPerStatus,
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+</script>
+{% endblock %}

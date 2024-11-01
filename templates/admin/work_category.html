@@ -1,0 +1,70 @@
+{% extends "admin/base.html" %}
+
+{% block content %}
+<div class="container">
+  <div class="page-inner">
+    <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+      <div>
+        <h3 class="fw-bold mb-3">Work Category</h3>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card card-round">
+          <form method="POST" action="{{ url_for('admin_work_category') }}">
+            <div class="row">
+              <div class="col-md-6 col-lg-4">
+                <div class="form-group">
+                  <label for="work_category">Work Category</label>
+                  <input type="text" class="form-control" id="work_category" name="work_category" placeholder="Enter Work Category Name" value="{{ work_category_to_edit.work_category_name if work_category_to_edit else '' }}" />
+                </div>
+                <input type="hidden" name="work_category_id" value="{{ work_category_to_edit.id if work_category_to_edit else '' }}" />
+                <div class="card-action">
+                  <button class="btn btn-success" type="submit">Submit</button>
+                  <button class="btn btn-danger" type="button" type="cancel">Cancel</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="col-md-12">
+        <div class="card card-round">
+          <div class="card-header">
+            <div class="card-head-row card-tools-still-right">
+              <div class="card-title">Work Category Data Table</div>
+            </div>
+          </div>
+          <div class="card-body p-0">
+            <div class="table-responsive">
+              <table class="table align-items-center mb-0">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">Work Category Name</th>
+                    <th scope="col" class="text-end">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for work_category in work_categories %}
+                  <tr>
+                    <td>{{ work_category.work_category_name }}</td>
+                    <td class="text-end">
+                      <a href="{{ url_for('admin_work_category', edit=work_category.id) }}" class="btn btn-info">Edit</a>
+                      <form method="POST" action="{{ url_for('delete_work_category', work_category_id=work_category.id) }}" style="display:inline;">
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this work category?');">Delete</button>
+                      </form>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
